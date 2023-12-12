@@ -2,6 +2,8 @@
 const express = require('express')
 // Importar path
 const path = require('path') //COMMON JS
+// Importar Override
+const methodOverride = require('method-override');
 
 // Inicializaciones
 // Instanciar express
@@ -15,15 +17,13 @@ app.set('views',path.join(__dirname, 'views'))
 // Middlewares 
 // Servidor va a trabajar con informacion en base a formularios
 app.use(express.urlencoded({extended:false}))
-
+app.use(methodOverride('_method'))
 
 // Variables globales
 
 // Rutas 
-// Primera ruta
-app.get('/',(req,res)=>{
-    res.render('index')
-})
+app.use(require('./routers/index.routes'))
+app.use(require('./routers/portafolio.routes'))
 
 // Archivos estáticos
 // Definir archivos estaticos y publicos
@@ -46,6 +46,7 @@ app.engine('.hbs',engine({
     // Establecer la extension de las paginas
     extname:'.hbs'
 }))
+
 // Establecer el metodo de plantillas
 app.set('view engine','.hbs')
 app.use(express.static(path.join(__dirname,'public')))

@@ -1,6 +1,8 @@
-// Cargar todas las variables de entorno
 require('dotenv').config()
+
+// IMPORTAR APP
 const app = require('./server.js')
+// IMPORTAR DATABASE
 const connection = require('./database.js')
 connection()
 

@@ -1,17 +1,24 @@
 
-// Importar mongoose
+// IMPORTAR MONGOOSE
 const mongoose = require('mongoose')
 
-// Generar un metodo para hacer la cadena de conexion
+
+//const MONGODB_URI = 'mongodb+srv://byrontosh:sistemas@cluster0.6e8zntc.mongodb.net/test'
+
+// CADENA DE CONEXIÓN A LA BDD
+
+// CREAR UN MÉTODO PARA HACER LA CADENA DE CONEXIÓN
 connection = async()=>{
     try {
-        await mongoose.connect(process.env.MONGODB_URI)
-        // Respuesta de la promesa cuando sea ok
-        console.log("Database is connected")
-    } catch (error) {
-        // Respuesta de la promesa cuando halla un error
-        console.log(error);
+        // INVOCAR AL MÉTODO CONNECT
+         await mongoose.connect(process.env.MONGODB_URI)
+         // RESPUESTA DE LA PROMESA == "TA BIEN"
+         console.log("Database is connected")
+        } catch (error) {
+            // RESPUESTA DE LA PROMESA == "TA MAL"
+            console.log(error)
     }
 }
-// Exportar el metodo connect
+
+// EXPORTAR EL MÉTODO CONNECT
 module.exports = connection
