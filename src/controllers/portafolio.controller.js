@@ -8,6 +8,9 @@ const renderAllPortafolios = async(req,res)=>{
 
     // Mandar a la vista los portafolios
     res.render("portafolio/allPortfolios",{portfolios})
+
+    // Mandar vista con JSON
+    //res.json(portfolios)
 }
 
 // Listar Detalle de un Portafolio
