@@ -1,11 +1,16 @@
 // Importar el modelo
 const Portfolio = require('../models/Portfolio')
 
-// Listar
-const renderAllPortafolios = (req,res)=>{
-    res.send('Listar todos los portafolios')
+// Método para Listar Portafolios
+const renderAllPortafolios = async(req,res)=>{
+    // Listar todos los portafolios y transformar en Objetos lean
+    const portfolios = await Portfolio.find().lean()
+
+    // Mandar a la vista los portafolios
+    res.render("portafolio/allPortfolios",{portfolios})
 }
 
+// Listar Detalle de un Portafolio
 const renderPortafolio = (req,res)=>{
     res.send('Mostrar el detalle de un portafolio')
 }
