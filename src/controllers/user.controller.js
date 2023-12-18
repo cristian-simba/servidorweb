@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const passport = require("passport")
 
 // Mostrar Formulario de Registro
 const renderRegisterForm =(req,res)=>{
@@ -40,9 +41,10 @@ const renderLoginForm =(req,res)=>{
 }
 
 // Capturar los datos del formulario y realizar el proceso login en BDD
-const loginUser =(req,res)=>{
-    res.send('login user')
-}
+const loginUser = passport.authenticate('local',{
+    failureRedirect:'/user/login',
+    successRedirect:'/portafolios'
+})
 
 // Cerrar sesión de Usuario
 const logoutUser =(req,res)=>{
