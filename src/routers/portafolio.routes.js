@@ -11,23 +11,27 @@ const { renderAllPortafolios,
         deletePortafolio
     } = require('../controllers/portafolio.controller.js')
 
+const {isAuthenticated} = require('../helpers/validate-auth')
+
+// Importar método
+
 // Cargar la vista del formulario
-router.get('/portafolio/add', renderPortafolioForm)
+router.get('/portafolio/add',isAuthenticated,renderPortafolioForm)
 // Ruta para capturar y guardar datos del form y guardar en BD
-router.post('/portafolio/add', createNewPortafolio)
+router.post('/portafolio/add', isAuthenticated,createNewPortafolio)
 
 // Presentar todos los formularios
-router.get('/portafolios', renderAllPortafolios)
+router.get('/portafolios',isAuthenticated,renderAllPortafolios)
 // Presentar detalle de un formulario
-router.get('/portafolio/:id', renderPortafolio)
+router.get('/portafolio/:id', isAuthenticated,renderPortafolio)
 
 // Cargar vista del formulario
-router.get('/portafolio/edit/:id', renderEditPortafolioForm)
+router.get('/portafolio/edit/:id', isAuthenticated,renderEditPortafolioForm)
 // Ruta para capturar y guardar los datos en BD
-router.put('/portafolio/edit/:id', updatePortafolio)
+router.put('/portafolio/edit/:id', isAuthenticated,updatePortafolio)
 
 // Ruta para eliminar el portafolio
-router.delete('/portafolio/delete/:id', deletePortafolio)
+router.delete('/portafolio/delete/:id', isAuthenticated,deletePortafolio)
 
 // Exportar
 module.exports = router
