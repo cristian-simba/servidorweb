@@ -1,10 +1,11 @@
 // Importar el modelo
 const Portfolio = require('../models/Portfolio')
+const { uploadImage } = require('../config/cloudinary')
 
 // Método para Listar Portafolios
 const renderAllPortafolios = async(req,res)=>{
     // Listar todos los portafolios y transformar en Objetos lean
-    const portfolios = await Portfolio.find().lean()
+    const portfolios = await Portfolio.find({user:req.user._id}).lean()
 
     // Mandar a la vista los portafolios
     res.render("portafolio/allPortfolios",{portfolios})
@@ -27,9 +28,19 @@ const renderPortafolioForm = (req,res)=>{
 const createNewPortafolio =async (req,res)=>{
     const {title, category,description} = req.body
     const newPortfolio = new Portfolio({title,category,description})
+    // Asociar el portafolio con el usuario
+    newPortfolio.user = req.user._id
+    // Validar si existe una imagen
+    if(!(req.files?.image)) return res.send("Se requiere una imagen")
+    // Usar el metodo
+    const imageUpload = await uploadImage(req.files.image.tempFilePath)
+    newPortfolio.image = {
+    public_id:imageUpload.public_id,
+    secure_url:imageUpload.secure_url
+    }
     await newPortfolio.save()
     res.redirect('/portafolios')
-}
+    }
 
 // Convertir en JSON y mandar a la vista de editar portafolio
 const renderEditPortafolioForm =async(req,res)=>{

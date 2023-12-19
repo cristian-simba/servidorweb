@@ -2,6 +2,8 @@
 const express = require('express')
 const passport = require('passport');
 const session = require('express-session');
+const fileUpload = require('express-fileupload')
+
 // Importar path
 const path = require('path') //COMMON JS
 // Importar Override
@@ -16,6 +18,10 @@ require('./config/passport')
 // Variables de configuracion
 app.set('port', process.env.port || 3000)
 app.set('views',path.join(__dirname, 'views'))
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : './uploads'
+}));
 
 // Middlewares 
 // Servidor va a trabajar con informacion en base a formularios
@@ -64,6 +70,10 @@ app.engine('.hbs',engine({
     // Establecer la extension de las paginas
     extname:'.hbs'
 }))
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : './uploads'
+}));
 
 // Establecer el metodo de plantillas
 app.set('view engine','.hbs')
